@@ -24,4 +24,4 @@ Morse decoder based on ESP32 and Goertzel Algorithm
      Le volume varie beaucoup d’un opérateur à l’autre, F5NWY arrivant S9+40 chez moi 😊
 
  25/12/2023 : Modifications V1.2 ==> V1.3 :
-   - Intégration de l'Algo de F5BU basé sur la mesure des temps de dot / dash / silences
+   - Intégration de l'Algo de F5BU basé sur la mesure des temps de dot / dash / silences (compile mais ne fonctionne pas encore 😊)
