@@ -35,7 +35,8 @@
 
  28/12/2023 : Modifications V1.3c ==> V1.3d :
    - Retour à l'Algo de YT utilisant hightimesavg comme discriminateur . / -
-   - Republication sur GitHub (sans le code de F5BU)
+   - Utilisation de VSCode + PlatformIO (à la place de l'IDE Arduino) : Le programme MorseDecoderV1.3d.ino devient src/main.cpp
+   - Republication sur GitHub (sans le code de F5BU, et au format PlatformIO)
 
  =====================================================================================
  Morse Code Decoder using an OLED and basic microphone

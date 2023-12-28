@@ -25,3 +25,18 @@ Morse decoder based on ESP32 and Goertzel Algorithm
 
  25/12/2023 : Modifications V1.2 ==> V1.3 :
    - Intégration de l'Algo de F5BU basé sur la mesure des temps de dot / dash / silences (compile mais ne fonctionne pas encore 😊)
+
+ 27/12/2023 : Modifications V1.2 ==> V1.3b :
+   - remplacement compteur (cptFreqLow) par la mesure du temps (using startLowSignal)
+   - Suppression du code F5BU
+
+ 27/12/2023 : Modifications V1.3b ==> V1.3c :
+   - Modif Algo : On base tout sur la mesure de moyDot, puis calcul de moyDash et moySP, séparation . / - using discri
+     Ca marche beaucoup moins bien ☹️
+   - Ajout trace pour visualiser sur le TFT : les min/max H et L, et les moyennes (moyDot, moyDash, moySP, discri, bMoy et barGraph)
+
+ 28/12/2023 : Modifications V1.3c ==> V1.3d :
+   - Retour à l'Algo de YT utilisant hightimesavg comme discriminateur . / -
+   - Utilisation de VSCode + PlatformIO (à la place de l'IDE Arduino) : Le programme MorseDecoderV1.3d.ino devient src/main.cpp
+   - Republication sur GitHub (sans le code de F5BU, et au format PlatformIO)
+
