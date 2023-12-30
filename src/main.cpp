@@ -60,7 +60,8 @@
  that license is http://www.gnu.org/copyleft/gpl.html
  Read more here http://en.wikipedia.org/wiki/Goertzel_algorithm 
  Adapted for the ESP32/ESP8266 by G6EJD  
-*/
+******************************************************************************************************************/
+#include "esp_clk.h"
 
 // F4LAA : Using TFT4 SPI display
 #include "SPI.h"
@@ -505,7 +506,8 @@ void setup() {
   tft.fillScreen(TFT_BLACK);
   tft.setTextSize(1);
   tft.setTextColor(TFT_ORANGE);
-  tftDrawString(125, 5, "CW Decoder V1.3d (28/12/2023) by F4LAA");
+  uint32_t cpu_freq = esp_clk_cpu_freq();
+  tftDrawString(80, 5, "CW Decoder V1.3d (28/12/2023) by F4LAA CpuFreq:" + String(cpu_freq / 1000000) + "MHz");
   tft.setTextSize(2);
 
   // Rotary encoder
