@@ -498,6 +498,11 @@ void setup() {
   Serial.begin(115200);
   delay(1200); // 1200 mini to wait Serial is initialized...
 
+  // Gestion des ADC
+  esp_err_t errCode = adc_set_clk_div(1); // Using PlatformIO, default=2 !!!!!! We need 1 (i.e no dividor) ti get over 10k Samples/s
+  Serial.println("adc_set_clk_div(): ErrCode=" + String(errCode));
+  //delay(250);
+
   // TFT 4" SPI Init
   // Max SPI_FREQUENCY for this tft is 80000000 (80MHz) which is also the Max SPI speed for ESP32
   // It is only 10 MHz for SPI Potientiometer according to MCP41010 Datasheet, 
@@ -509,6 +514,9 @@ void setup() {
   tft.setTextColor(TFT_ORANGE);
   uint32_t cpu_freq = esp_clk_cpu_freq();
   tftDrawString(0, 5, "CW Decoder V1.3d (28/12/2023) by F4LAA (PlatformIO)              CpuFreq: " + String(cpu_freq / 1000000) + "MHz");
+  // ATTENTION: Si on enlève cette trace, le adc_set_clk_div(1) ne fonctionne pas !!!
+  // uint32_t abp_freq = esp_clk_apb_freq();  
+  // tftDrawString(322, 5, String(abp_freq / 1000000) + "MHz"); // Et il FAUT faire cd tftDrawString !!!
   tft.setTextSize(2);
 
   // Rotary encoder
@@ -519,10 +527,10 @@ void setup() {
   //rotSWState = digitalRead(rotEncSW);
   /* */
 
-  // Gestion ADC: Using PlatformIO, default=2 !!!!!! 
-  // We need 1 (i.e no dividor) to get over 10k Samples/s
-  esp_err_t errCode = adc_set_clk_div(1); // Set ADC clock divider to 1
-  Serial.println("adc_set_clk_div(): ErrCode=" + String(errCode));
+  // Gestion des ADC : Il faut le refaire (après Init du TFT) !!!
+  esp_err_t errCode2 = adc_set_clk_div(1); // Using PlatformIO, default=2 !!!!!! We need 1 (i.e no dividor) ti get over 10k Samples/s
+  Serial.println("adc_set_clk_div(): ErrCode2=" + String(errCode2));
+  //delay(250);
 
   // Measure sampling_freq
   int tStartLoop = millis();
