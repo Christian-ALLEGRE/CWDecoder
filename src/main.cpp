@@ -61,7 +61,8 @@
  Read more here http://en.wikipedia.org/wiki/Goertzel_algorithm 
  Adapted for the ESP32/ESP8266 by G6EJD  
 ******************************************************************************************************************/
-#include "esp_clk.h"
+#include "esp32/clk.h"
+#include "driver/adc.h"
 
 // F4LAA : Using TFT4 SPI display
 #include "SPI.h"
@@ -265,7 +266,7 @@ float Q2 = 0;
 #define NBSAMPLEMIN 50
 #define NBSAMPLEMAX 250
 int testData[NBSAMPLEMAX];
-int nbSamples = 110;
+int nbSamples = 100;
 
 // you can set the tuning tone to 496, 558, 744 or 992
 int iFreq = 0;  
@@ -507,7 +508,7 @@ void setup() {
   tft.setTextSize(1);
   tft.setTextColor(TFT_ORANGE);
   uint32_t cpu_freq = esp_clk_cpu_freq();
-  tftDrawString(80, 5, "CW Decoder V1.3d (28/12/2023) by F4LAA CpuFreq:" + String(cpu_freq / 1000000) + "MHz");
+  tftDrawString(0, 5, "CW Decoder V1.3d (28/12/2023) by F4LAA (PlatformIO)              CpuFreq: " + String(cpu_freq / 1000000) + "MHz");
   tft.setTextSize(2);
 
   // Rotary encoder
@@ -517,6 +518,11 @@ void setup() {
   pinMode (rotEncSW,INPUT_PULLUP);
   //rotSWState = digitalRead(rotEncSW);
   /* */
+
+  // Gestion ADC: Using PlatformIO, default=2 !!!!!! 
+  // We need 1 (i.e no dividor) to get over 10k Samples/s
+  esp_err_t errCode = adc_set_clk_div(1); // Set ADC clock divider to 1
+  Serial.println("adc_set_clk_div(): ErrCode=" + String(errCode));
 
   // Measure sampling_freq
   int tStartLoop = millis();
@@ -636,9 +642,7 @@ Acq:
 
   // Acquisition
   for (int i = 0; i < nbSamples; i++) 
-  {
-    testData[i] = analogRead(A0);
-  }
+    testData[i] = analogRead(A0); 
 
   if (cptLoop == 1)
   {
